@@ -1,1 +1,1 @@
-# findtranslate
+# findtranslate package
