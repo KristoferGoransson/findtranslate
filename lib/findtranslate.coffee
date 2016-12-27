@@ -52,7 +52,8 @@ module.exports = Findtranslate =
       subscription.dispose()
 
   traverse: (index, start, end, range) ->
-    @texteditor.scanInBufferRange @getRegexp(@words[index]), new Range(start, end), (match) =>
+    isFirst = index == 0
+    @texteditor.scanInBufferRange @getRegexp(@words[index], isFirst), new Range(start, end), (match) =>
       match.stop()
       if match
         range = match.range
@@ -64,5 +65,8 @@ module.exports = Findtranslate =
     @texteditor.setCursorBufferPosition(range.end)
     @texteditor.scrollToCursorPosition()
 
-  getRegexp: (word) ->
-    new RegExp "(#{word}(?:\.|:))"
+  getRegexp: (word, isFirst) ->
+    if isFirst
+      new RegExp "(#{word}:\ \{)" # "SOME_WORD: {"
+    else
+      new RegExp "(#{word}:)"     # "SOME_WORD:"
