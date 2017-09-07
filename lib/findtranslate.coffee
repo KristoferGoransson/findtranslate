@@ -62,8 +62,9 @@ module.exports = Findtranslate =
     return range
 
   select: (range) ->
-    @texteditor.setCursorBufferPosition(range.end)
-    @texteditor.scrollToCursorPosition()
+    if range
+      @texteditor.setCursorBufferPosition(range.end)
+      @texteditor.scrollToCursorPosition()
 
   getRegexp: (word, isFirst) ->
     if isFirst
