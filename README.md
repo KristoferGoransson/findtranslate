@@ -1,2 +1,2 @@
 # findtranslate package
-test2
+test
