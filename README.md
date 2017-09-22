@@ -1,1 +1,1 @@
-ad# findtranslate package
+qqad# findtranslate package
