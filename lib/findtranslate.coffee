@@ -6,12 +6,13 @@ FindtranslateView = require './findtranslate-view'
 module.exports = Findtranslate =
   subscriptions: null
   options:
-    wordRegex: new RegExp("('[A-Z\._]+|[A-Z\._]+')")
+    wordRegex: new RegExp("(['\"]+[A-Z0-9\._]+['\"]+)")
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace', 'findtranslate:findEn': => @find('en')
     @subscriptions.add atom.commands.add 'atom-workspace', 'findtranslate:findSv': => @find('sv')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'findtranslate:findNb': => @find('nb')
 
   deactivate: ->
     @subscriptions.dispose()
@@ -52,8 +53,8 @@ module.exports = Findtranslate =
       subscription.dispose()
 
   traverse: (index, start, end, range) ->
-    isFirst = index == 0
-    @texteditor.scanInBufferRange @getRegexp(@words[index], isFirst), new Range(start, end), (match) =>
+    index == 0
+    @texteditor.scanInBufferRange @getRegexp(@words[index]), new Range(start, end), (match) =>
       match.stop()
       if match
         range = match.range
@@ -65,8 +66,5 @@ module.exports = Findtranslate =
     @texteditor.setCursorBufferPosition(range.end)
     @texteditor.scrollToCursorPosition()
 
-  getRegexp: (word, isFirst) ->
-    if isFirst
-      new RegExp "(#{word}:\ \{)" # "SOME_WORD: {"
-    else
-      new RegExp "(#{word}:)"     # "SOME_WORD:"
+  getRegexp: (word) ->
+    new RegExp "(#{word}:)"     # "SOME_WORD:"

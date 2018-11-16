@@ -8,6 +8,10 @@
     {
       'label': 'Goto translation in \'sv\''
       'command': 'findtranslate:findSv'
+    },
+    {
+      'label': 'Goto translation in \'nb\''
+      'command': 'findtranslate:findNb'
     }
   ]
 # 'menu': [
